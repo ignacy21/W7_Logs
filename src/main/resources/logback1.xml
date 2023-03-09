@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <property name="ROLLED-FILE" value="${user.dir}/my-logs/newest.log"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level - %logger{36}:%method:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="ROLLING-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ROLLED-FILE}</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/my-logs/archived/rolled.%d{yyyy-MM-dd-HH-mm-ss}.%i.log</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+            <maxHistory>50</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy:MM:dd HH:mm:ss} [%t] %-5level - %logger{36}:%method:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <append-ref ref="CONSOLE"/>
+        <append-ref ref="ROLLING-LOG"/>
+    </root>
+
+</configuration>
